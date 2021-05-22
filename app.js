@@ -26,27 +26,22 @@ app.use((req, res, next) => {
 
 app.use(index)
 
-mongoose.connect(process.env.URLDB,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
-  }, (err, res) => {
-    if (err) throw err;
-    console.log('Base de datos ONLINE');
-    Usuario.find({ email: 'administrador' }, (err, user) => {
-      if (!user.length) {
-        new Usuario({
-          nombre: 'Manager',
-          email: 'administrador',
-          password: bcrypt.hashSync('admin123', 10),
-          role: 'ADMIN_ROLE',
-          createfolder: true,
-          deletefolder: true,
-          deletefiles: true
-        }).save()
-      }
-    })
+mongoose.connect(process.env.URLDB, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, (err, res) => {
+  if (err) throw err;
+  console.log('Base de datos ONLINE');
+  Usuario.find({ email: 'administrador' }, (err, user) => {
+    if (!user.length) {
+      new Usuario({
+        nombre: 'Manager',
+        email: 'administrador',
+        password: bcrypt.hashSync('admin123', 10),
+        role: 'ADMIN_ROLE',
+        createfolder: true,
+        deletefolder: true,
+        deletefiles: true
+      }).save()
+    }
   })
+})
 
 module.exports = app
